@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import './employees-list-item.css';
 
-const EmployeesListItem = ({name, salary}) => {
+const EmployeesListItem = ({name, salary, onDelete}) => {
     const [increase, setIncrease] = useState(false);
     const [like, setLike] = useState(false);
 
@@ -26,17 +26,17 @@ const EmployeesListItem = ({name, salary}) => {
     return (
         <li className={className}>
             <span className="list-group-item-label" onClick={onRise}>{name}</span>
-            <input type="text" className="list-group-item-input" defaultValue={salary}$/>
+            <input type="text" className="list-group-item-input" defaultValue={salary + `$`}/>
             <div className='d-flex justify-content-center align-items-center'>
                 <button type="button"
                         className="btn-cookie btn-sm "
-                        onIncrease={increase}
                         onClick={onChangeIncrease}
                 >
                     <i className="fas fa-cookie"></i>
                 </button>
 
                 <button type="button"
+                        onClick={onDelete}
                         className="btn-trash btn-sm ">
                     <i className="fas fa-trash"></i>
                 </button>
