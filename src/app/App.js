@@ -14,7 +14,9 @@ const App = () => {
             {name: 'Tetiana Si', salary: 2500, increase: false, rise: true, id: 1},
             {name: 'Natalia Si', salary: 1200, increase: true, rise: false, id: 2},
             {name: 'Galina G', salary: 3650, increase: false, rise: false, id: 3},
-        ]
+
+        ],
+
     );
 
    const deleteItem = (id) => {
@@ -42,10 +44,23 @@ const App = () => {
    }
 
 
-
-
     const employees = data.length;
-   const increased = data.filter(item => item.increase).length;
+    const increased = data.filter(item => item.increase).length;
+
+    const addItem = (name, salary) => {
+        const newItem = {
+            name: name,
+            salary: salary,
+            increase: false,
+            rise: false,
+            id: Math.random().toString()
+
+
+        }
+        const newArr = [...data, newItem];
+        setData([...newArr])
+
+    }
 
     return (
 
@@ -64,7 +79,7 @@ const App = () => {
                            onToggleRise={onToggleRise}
                            onDelete={deleteItem}
             />
-            <EmployeesAddForm/>
+            <EmployeesAddForm onAdd={addItem}/>
         </div>
     );
 }
