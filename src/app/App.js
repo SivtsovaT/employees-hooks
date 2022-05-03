@@ -18,6 +18,7 @@ const App = () => {
         ],
 
     );
+    const [term, setTerm] = useState('');
 
    const deleteItem = (id) => {
        const index = data.findIndex(elem => elem.id === id);
@@ -62,6 +63,20 @@ const App = () => {
 
     }
 
+    const searchEmp = (items, term) => {
+        if (term.length === 0) {
+            return items;
+        }
+        return items.filter(item => {
+            return item.name.indexOf(term) > -1;
+        })
+    }
+    const visibleData = searchEmp(data,term);
+
+    const onUpdateSearch = (term) => {
+        setTerm(term)
+    }
+
     return (
 
         <div className="app">
@@ -70,11 +85,11 @@ const App = () => {
             />
 
             <div className="search-panel">
-                <SearchPanel/>
+                <SearchPanel onUpdateSearch={onUpdateSearch}/>
                 <AppFilter/>
             </div>
 
-            <EmployeesList data={data}
+            <EmployeesList data={visibleData}
                            onToggleIncrease={onToggleIncrease}
                            onToggleRise={onToggleRise}
                            onDelete={deleteItem}
