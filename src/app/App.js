@@ -16,6 +16,7 @@ const App = () => {
             {name: 'Galina G', salary: 3650, increase: false, rise: false, id: 3},
         ]
     );
+
    const deleteItem = (id) => {
        const index = data.findIndex(elem => elem.id === id);
        const before = data.slice(0, index);
@@ -24,12 +25,34 @@ const App = () => {
        setData([...newArr]);
    }
 
+    const onToggleIncrease = (id) => {
+        const index = data.findIndex(elem => elem.id === id);
+        const old = data[index];
+        const newItem = {...old, increase: !old.increase};
+        const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+        setData([...newArr]);
+    }
+
+   const onToggleRise = (id) => {
+       const index = data.findIndex(elem => elem.id === id);
+       const old = data[index];
+       const newItem = {...old, rise: !old.rise};
+       const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+       setData([...newArr]);
+   }
 
 
+
+
+    const employees = data.length;
+   const increased = data.filter(item => item.increase).length;
 
     return (
+
         <div className="app">
-            <AppInfo />
+            <AppInfo employees={employees}
+                     increased={increased}
+            />
 
             <div className="search-panel">
                 <SearchPanel/>
@@ -37,6 +60,8 @@ const App = () => {
             </div>
 
             <EmployeesList data={data}
+                           onToggleIncrease={onToggleIncrease}
+                           onToggleRise={onToggleRise}
                            onDelete={deleteItem}
             />
             <EmployeesAddForm/>
