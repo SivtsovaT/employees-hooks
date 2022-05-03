@@ -3,19 +3,29 @@ import './employees-list-item.css';
 
 const EmployeesListItem = ({name, salary}) => {
     const [increase, setIncrease] = useState(false);
+    const [like, setLike] = useState(false);
+
     const onChangeIncrease = (event) => {
         event.preventDefault();
         setIncrease(!increase);
+    }
+
+    const onRise = (event) => {
+        event.preventDefault();
+        setLike(!like)
     }
 
     let className = "list-group-item d-flex justify-content-between";
     if (increase) {
         className += ' increase';
     }
+    if (like) {
+        className += ' like';
+    }
 
     return (
         <li className={className}>
-            <span className="list-group-item-label">{name}</span>
+            <span className="list-group-item-label" onClick={onRise}>{name}</span>
             <input type="text" className="list-group-item-input" defaultValue={salary}$/>
             <div className='d-flex justify-content-center align-items-center'>
                 <button type="button"
