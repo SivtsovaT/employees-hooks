@@ -19,6 +19,7 @@ const App = () => {
 
     );
     const [term, setTerm] = useState('');
+    const [filter, setFilter] = useState('');
 
    const deleteItem = (id) => {
        const index = data.findIndex(elem => elem.id === id);
@@ -71,11 +72,27 @@ const App = () => {
             return item.name.indexOf(term) > -1;
         })
     }
-    const visibleData = searchEmp(data,term);
 
     const onUpdateSearch = (term) => {
         setTerm(term)
     }
+    const  filterPost = (items, filter) => {
+        switch (filter) {
+            case 'rise':
+                return items.filter(item => item.rise);
+            case 'moreThen1500':
+                return items.filter(item => item.salary > 1500);
+            default:
+                return items
+        }
+    }
+    const visibleData = filterPost(searchEmp(data,term), filter);
+
+    const onFilterSelect = (filter) => {
+        setFilter(filter)
+    }
+
+
 
     return (
 
@@ -86,7 +103,9 @@ const App = () => {
 
             <div className="search-panel">
                 <SearchPanel onUpdateSearch={onUpdateSearch}/>
-                <AppFilter/>
+                <AppFilter filter={filter}
+                           onFilterSelect={onFilterSelect}
+                />
             </div>
 
             <EmployeesList data={visibleData}
